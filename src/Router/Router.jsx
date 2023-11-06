@@ -7,6 +7,7 @@ import Home from "./../Pages/Home/Home";
 import LogIn from "../LogIn/LogIn";
 import Registration from "../Registration/Registration";
 import AddServices from "../Services/AddServices/AddServices";
+import AllServices from "../Services/Services/AllServices";
 
 const router = createBrowserRouter([
   {
@@ -21,6 +22,10 @@ const router = createBrowserRouter([
       {
         path: "/addServices",
         element: <AddServices />,
+      },
+      {
+        path: "/allServices",
+        element: <AllServices />,
       },
       {
         path: "/logIn",

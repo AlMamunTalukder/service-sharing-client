@@ -119,7 +119,7 @@ const Navbar = () => {
             </div>
           ) : (
             <NavLink to="logIn">
-              <a className="btn bg-violet-400 rounded-full text-black hover:text-white">
+              <a className="btn bg-violet-400 rounded text-black hover:text-white">
                 Log In
               </a>
             </NavLink>
@@ -172,7 +172,7 @@ const Navbar = () => {
                 </div>
               ) : (
                 <NavLink to="logIn">
-                  <a className="btn bg-violet-400 rounded-full text-black hover:text-white">
+                  <a className="btn bg-violet-400 rounded text-black hover:text-white">
                     Log In
                   </a>
                 </NavLink>
