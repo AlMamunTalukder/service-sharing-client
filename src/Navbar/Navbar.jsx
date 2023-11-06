@@ -69,6 +69,22 @@ const Navbar = () => {
           </details>
         </li>
       )}
+      {user && (
+        <li>
+          <NavLink
+            to="/manageServices"
+            className={({ isActive, isPending }) =>
+              isPending
+                ? "pending"
+                : isActive
+                ? "text-violet-400 underline"
+                : ""
+            }
+          >
+            Manage Services
+          </NavLink>
+        </li>
+      )}
     </>
   );
   return (
