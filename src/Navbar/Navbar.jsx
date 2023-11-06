@@ -1,12 +1,14 @@
 // import { useContext } from "react";
+import { useContext } from "react";
 import { NavLink } from "react-router-dom";
+import { AuthContext } from "./../PrivateRouter/AuthProvider";
 
 const Navbar = () => {
-  //   const { user, logOut } = useContext(); //AuthContext
+  const { user, logOut } = useContext(AuthContext);
 
-  //   const handleLogOut = () => {
-  //     logOut().then();
-  //   };
+  const handleLogOut = () => {
+    logOut().then();
+  };
 
   const navbarPage = (
     <>
@@ -30,41 +32,43 @@ const Navbar = () => {
           Services
         </NavLink>
       </li>
-      <li tabIndex={0}>
-        <details>
-          <summary>Dash Board</summary>
-          <ul className="">
-            <li className="">
-              <NavLink
-                to="/addServices"
-                className={({ isActive, isPending }) =>
-                  isPending
-                    ? "pending"
-                    : isActive
-                    ? "text-violet-400 underline"
-                    : "w-28"
-                }
-              >
-                Add Services
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to="/mySchedule"
-                className={({ isActive, isPending }) =>
-                  isPending
-                    ? "pending"
-                    : isActive
-                    ? "text-violet-400 underline"
-                    : ""
-                }
-              >
-                My Schedule
-              </NavLink>
-            </li>
-          </ul>
-        </details>
-      </li>
+      {user && (
+        <li tabIndex={0}>
+          <details>
+            <summary>Dash Board</summary>
+            <ul className="">
+              <li className="">
+                <NavLink
+                  to="/addServices"
+                  className={({ isActive, isPending }) =>
+                    isPending
+                      ? "pending"
+                      : isActive
+                      ? "text-violet-400 underline"
+                      : "w-28"
+                  }
+                >
+                  Add Services
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/mySchedule"
+                  className={({ isActive, isPending }) =>
+                    isPending
+                      ? "pending"
+                      : isActive
+                      ? "text-violet-400 underline"
+                      : ""
+                  }
+                >
+                  My Schedule
+                </NavLink>
+              </li>
+            </ul>
+          </details>
+        </li>
+      )}
     </>
   );
   return (
@@ -80,13 +84,32 @@ const Navbar = () => {
           <ul className="menu menu-horizontal px-1">{navbarPage}</ul>
         </div>
         <div className="navbar-end hidden lg:flex">
-          {/* //user code here  */}
-          <NavLink to="logIn">
-            <a className="btn bg-violet-400 rounded-full text-black hover:text-white">
-              Log In
-            </a>
-          </NavLink>
+          {user ? (
+            <div className="flex items-center">
+              {user.photoURL ? (
+                <img
+                  src={user.photoURL}
+                  alt={`${user.displayName}'s profile`}
+                  className="w-10 h-10 rounded-full mr-2"
+                />
+              ) : (
+                <div className="w-10 h-10 rounded-full bg-gray-500 mr-2"></div>
+              )}
+              <p className="mr-2">{user.displayName}</p>
+              {/* <p>{user.email}</p> */}
+              <button onClick={handleLogOut} className="btn btn-primary ml-2">
+                Log Out
+              </button>
+            </div>
+          ) : (
+            <NavLink to="logIn">
+              <a className="btn bg-violet-400 rounded-full text-black hover:text-white">
+                Log In
+              </a>
+            </NavLink>
+          )}
         </div>
+
         <div className="dropdown lg:hidden">
           <div className="flex justify-between items-end w-full pl-72 ">
             <button className="btn btn-square btn-ghost">
@@ -110,12 +133,34 @@ const Navbar = () => {
             className=" menu menu-sm dropdown-content mt-3  p-2 shadow bg-base-100 rounded-box items-center ml-52 w-auto gap-x-2"
           >
             {navbarPage}
-            <div className="">
-              <NavLink to="logIn">
-                <a className="btn bg-violet-400 rounded-full text-black hover-text-white mt-2">
-                  Log In
-                </a>
-              </NavLink>
+            <div className="navbar-end hidden lg:flex">
+              {user ? (
+                <div className="flex items-center">
+                  {user.photoURL ? (
+                    <img
+                      src={user.photoURL}
+                      alt={`${user.displayName}'s profile`}
+                      className="w-10 h-10 rounded-full mr-2"
+                    />
+                  ) : (
+                    <div className="w-10 h-10 rounded-full bg-gray-500 mr-2"></div>
+                  )}
+                  <p className="mr-2">{user.displayName}</p>
+                  {/* <p>{user.email}</p> */}
+                  <button
+                    onClick={handleLogOut}
+                    className="btn btn-primary ml-2"
+                  >
+                    Log Out
+                  </button>
+                </div>
+              ) : (
+                <NavLink to="logIn">
+                  <a className="btn bg-violet-400 rounded-full text-black hover:text-white">
+                    Log In
+                  </a>
+                </NavLink>
+              )}
             </div>
           </ul>
         </div>

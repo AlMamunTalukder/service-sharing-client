@@ -1,6 +1,42 @@
-import { Link } from "react-router-dom";
+import { useContext, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import swal from "sweetalert";
+import { AuthContext } from "./../PrivateRouter/AuthProvider";
 
 const LogIn = () => {
+  const { googleSignIn, signIn } = useContext(AuthContext);
+
+  const [email, setEmail] = useState("");
+  const [password, setPass] = useState("");
+  const [error, setError] = useState("");
+
+  const location = useLocation();
+  console.log(location);
+  const navigate = useNavigate();
+
+  const handleGoogleLogIn = () => {
+    googleSignIn().then((response) => {
+      console.log(response.user);
+      swal("Welcome", "Log in Successful", "success");
+      navigate("/");
+    });
+  };
+
+  const handleLogIn = () => {
+    if (email && password) {
+      signIn(email, password)
+        .then((result) => {
+          console.log(result.user);
+          swal("Welcome", "Log in Successful", "success");
+          navigate("/");
+        })
+
+        .catch((error) => {
+          setError(error.message);
+        });
+    }
+  };
+
   const glassmorphismContainerStyle = {
     background: 'url("https://i.ibb.co/fXgxHq3/undefined-Imgur.jpg")',
     backgroundSize: "cover",
@@ -37,14 +73,14 @@ const LogIn = () => {
         <div className=" ">
           <div className="text-center mb-4">
             <h1 className="text-5xl font-bold">Login now!</h1>
-            {/* <p>{error}</p> */}
+            <p>{error}</p>
           </div>
 
           <div className="">
             <div className="card-body" style={glassmorphismCardStyle}>
               <div className="text-center">
                 <button
-                  //   onClick={handleGoogleLogIn}
+                  onClick={handleGoogleLogIn}
                   className="btn btn-wide mt-4"
                 >
                   <svg
@@ -66,8 +102,8 @@ const LogIn = () => {
                   type="text"
                   placeholder="email"
                   className="input input-bordered"
-                  //   value={email}
-                  //   onChange={(e) => setEmail(e.target.value)}
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
               <div className="form-control">
@@ -78,8 +114,8 @@ const LogIn = () => {
                   type="password"
                   placeholder="password"
                   className="input input-bordered"
-                  //   value={password}
-                  //   onChange={(e) => setPass(e.target.value)}
+                  value={password}
+                  onChange={(e) => setPass(e.target.value)}
                 />
                 <label className="label">
                   <a href="#" className="label-text-alt link link-hover">
@@ -88,10 +124,7 @@ const LogIn = () => {
                 </label>
               </div>
               <div className="form-control mt-6 p-0">
-                <button
-                  // onClick={handleLogIn}
-                  className="btn btn-neutral"
-                >
+                <button onClick={handleLogIn} className="btn btn-neutral">
                   Login
                 </button>
               </div>

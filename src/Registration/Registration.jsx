@@ -1,5 +1,39 @@
-import { Link } from "react-router-dom";
+import { useContext, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "./../PrivateRouter/AuthProvider";
+import swal from "sweetalert";
 const Registration = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPass] = useState("");
+  const [error, setError] = useState("");
+  const [name, setName] = useState("");
+  const [img, setImg] = useState("");
+
+  const { signUp } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const handleRegisterAuth = (e) => {
+    e.preventDefault();
+
+    if (!/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/.test(password)) {
+      swal(
+        "Error",
+        "Minimum Six character, at least one Letter and one Number",
+        "success"
+      );
+      setError("");
+    } else {
+      setError("");
+      if (email) {
+        signUp(email, password, name, img).then((result) => {
+          console.log(result);
+
+          swal("Welcome", "Account Create Successfully ", "success");
+          navigate("/");
+        });
+      }
+    }
+  };
   const glassmorphismContainerStyle = {
     background: 'url("https://i.ibb.co/fXgxHq3/undefined-Imgur.jpg")',
     backgroundSize: "cover",
@@ -37,7 +71,7 @@ const Registration = () => {
           <h1 className="text-5xl font-bold text-center mb-3 text-white">
             Register now!
           </h1>
-          {/* <p className="text-center text-red-500">{error.message}</p> */}
+          <p className="text-center text-red-500">{error.message}</p>
           <div className="">
             <form className="card-body " style={glassmorphismCardStyle}>
               <div className="form-control">
@@ -49,6 +83,7 @@ const Registration = () => {
                   placeholder="Full name"
                   className="input input-bordered"
                   name="name"
+                  onChange={(e) => setName(e.target.value)}
                 />
               </div>
               <div className="form-control">
@@ -56,7 +91,7 @@ const Registration = () => {
                   <span className="label-text">Email</span>
                 </label>
                 <input
-                  //   onChange={(e) => setEmail(e.target.value)}
+                  onChange={(e) => setEmail(e.target.value)}
                   type="email"
                   placeholder="email"
                   className="input input-bordered"
@@ -72,6 +107,7 @@ const Registration = () => {
                   placeholder="image url"
                   className="input input-bordered"
                   name="img"
+                  onChange={(e) => setImg(e.target.value)}
                 />
               </div>
               <div className="form-control">
@@ -81,7 +117,7 @@ const Registration = () => {
                   </span>
                 </label>
                 <input
-                  //   onChange={(e) => setPass(e.target.value)}
+                  onChange={(e) => setPass(e.target.value)}
                   type="password"
                   placeholder="password"
                   className="input input-bordered"
@@ -90,7 +126,7 @@ const Registration = () => {
               </div>
               <div className="form-control mt-6 p-0">
                 <button
-                  //   onClick={handleRegisterAuth}
+                  onClick={handleRegisterAuth}
                   className="btn btn-neutral"
                   type="submit"
                 >
