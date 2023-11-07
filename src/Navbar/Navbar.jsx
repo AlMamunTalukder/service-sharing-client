@@ -126,8 +126,8 @@ const Navbar = () => {
           )}
         </div>
 
-        <div className="dropdown lg:hidden">
-          <div className="flex justify-between items-end w-full pl-72 ">
+        <div className="dropdown lg:hidden ">
+          <div className="flex justify-between items-end  pl-72 ">
             <button className="btn btn-square btn-ghost">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -146,7 +146,7 @@ const Navbar = () => {
           </div>
           <ul
             tabIndex={0}
-            className=" menu menu-sm dropdown-content mt-3  p-2 shadow bg-base-100 rounded-box items-center ml-52 w-auto gap-x-2"
+            className=" menu menu-sm dropdown-content mt-3 h-[200px] p-2 shadow bg-base-100 rounded-box items-center ml-48 w-[150px] gap-x-2"
           >
             {navbarPage}
             <div className="navbar-end hidden lg:flex">

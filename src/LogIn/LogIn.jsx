@@ -28,7 +28,8 @@ const LogIn = () => {
         .then((result) => {
           console.log(result.user);
           swal("Welcome", "Log in Successful", "success");
-          navigate("/");
+
+          navigate(location?.state ? location?.state : "/");
         })
 
         .catch((error) => {

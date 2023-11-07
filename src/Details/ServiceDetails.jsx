@@ -1,5 +1,9 @@
+import { useContext } from "react";
+import { AuthContext } from "./../PrivateRouter/AuthProvider";
+
 /* eslint-disable react/prop-types */
 const ServiceDetails = ({ service }) => {
+  const { user } = useContext(AuthContext);
   const {
     _id,
     serviceName,
@@ -9,10 +13,11 @@ const ServiceDetails = ({ service }) => {
     serviceProviderImage,
     servicePrice,
     serviceArea,
+    providerEmail,
   } = service || {};
   return (
-    <div className="items-center justify-center ml-[500px] ">
-      <div className="flex flex-col max-w-lg p-6 space-y-6 overflow-hidden rounded-lg shadow-md dark:bg-gray-900 dark:text-gray-100 my-12 ">
+    <div className="items-center justify-center  ">
+      <div className="flex flex-col max-w-lg p-6 space-y-6 overflow-hidden rounded-lg shadow-md dark:bg-gray-900 dark:text-gray-100 my-12 ml-[100px] md:ml-[200px] lg:ml-[500px] ">
         <div className="flex space-x-4">
           <div className="flex flex-col space-y-1">
             <a rel="noopener noreferrer" className="text-sm font-semibold">
@@ -49,10 +54,10 @@ const ServiceDetails = ({ service }) => {
         {/* modals */}
 
         <button
-          className="btn"
+          className="btn bg-blue-500 text-white"
           onClick={() => document.getElementById("my_modal_3").showModal()}
         >
-          open modal
+          Book Now
         </button>
         <dialog id="my_modal_3" className="modal">
           <div className="modal-box">
@@ -64,8 +69,8 @@ const ServiceDetails = ({ service }) => {
             </form>
             <div>
               <div className="">
-                <div className="container mx-auto p-4 ">
-                  <form className="w-full max-w-lg mx-auto bg-blue-50 m-5 p-5">
+                <div className="container mx-auto p-1 ">
+                  <form className="w-full max-w-lg mx-auto bg-blue-50 m-4 p-2 rounded-md h-full">
                     <div className="grid grid-cols-2 gap-4">
                       <div className="col-span-1">
                         <label className="block text-gray-700 text-sm font-bold mb-2">
@@ -75,69 +80,79 @@ const ServiceDetails = ({ service }) => {
                           type="text"
                           id="sName"
                           name="sName"
-                          className="w-full px-3 py-2 border rounded-lg"
+                          className="w-full px-3 py-2 border rounded-lg text-black"
+                          defaultValue={serviceName}
+                          disabled
                         />
                       </div>
                       <div className="col-span-1">
                         <label className="block text-gray-700 text-sm font-bold mb-2">
-                          Name
+                          Service Image
                         </label>
                         <input
                           type="text"
-                          id="name"
-                          name="name"
-                          className="w-full px-3 py-2 border rounded-lg"
+                          id="photo"
+                          name="photo"
+                          className="w-full px-3 py-2 border rounded-lg text-black"
+                          defaultValue={serviceImage}
+                          disabled
                         />
                       </div>
                       <div className="col-span-1">
                         <label className="block text-gray-700 text-sm font-bold mb-2">
-                          Email
+                          Service Provider email
                         </label>
                         <input
                           type="email"
                           id="email"
                           name="email"
-                          className="w-full px-3 py-2 border rounded-lg"
+                          className="w-full px-3 py-2 border rounded-lg text-black"
+                          defaultValue={providerEmail}
+                          disabled
                         />
                       </div>
                       <div className="col-span-1">
                         <label className="block text-gray-700 text-sm font-bold mb-2">
+                          User Email
+                        </label>
+                        <input
+                          type="email"
+                          id="email"
+                          name="email"
+                          className="w-full px-3 py-2 border rounded-lg text-black"
+                          defaultValue={user?.email}
+                          disabled
+                        />
+                      </div>
+                      <div className="col-span-1">
+                        <label className="block text-gray-700 text-sm font-bold mb-2">
+                          Service Taking Date
+                        </label>
+                        <input
+                          type="date"
+                          id="date"
+                          name="date"
+                          className="w-full px-3 py-2 border rounded-lg"
+                        />
+                      </div>
+                      <div className="col-span-1">
+                        <label className="block text-gray-700 text-sm font-bold mb-2 ">
                           Price
                         </label>
                         <input
                           type="text"
                           id="price"
                           name="price"
-                          className="w-full px-3 py-2 border rounded-lg"
-                        />
-                      </div>
-                      <div className="col-span-1">
-                        <label className="block text-gray-700 text-sm font-bold mb-2">
-                          Service Area
-                        </label>
-                        <input
-                          type="text"
-                          id="serviceArea"
-                          name="serviceArea"
-                          className="w-full px-3 py-2 border rounded-lg"
-                        />
-                      </div>
-                      <div className="col-span-1">
-                        <label className="block text-gray-700 text-sm font-bold mb-2">
-                          Photo
-                        </label>
-                        <input
-                          type="text"
-                          id="photo"
-                          name="photo"
-                          className="w-full px-3 py-2 border rounded-lg"
+                          className="w-full px-3 py-2 border rounded-lg text-black"
+                          defaultValue={servicePrice}
+                          disabled
                         />
                       </div>
                     </div>
 
                     <div className="">
                       <label className="block text-gray-700 text-sm font-bold mb-2">
-                        Description
+                        Special instruction
                       </label>
                       <textarea
                         type="text"
@@ -152,14 +167,13 @@ const ServiceDetails = ({ service }) => {
                         type="submit"
                         className="w-full bg-blue-500 text-white font-bold py-2 rounded-lg"
                       >
-                        Add Service
+                        Purchase Service
                       </button>
                     </div>
                   </form>
                 </div>
               </div>
             </div>
-            <button className="btn">Purchase This Service</button>
           </div>
         </dialog>
       </div>
