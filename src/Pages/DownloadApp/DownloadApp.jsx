@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 const DownloadApp = () => {
   return (
     <div>
-      <div className="card lg:card-side bg-white shadow-xl mx-32 mb-20 mt-20">
+      <div className="card lg:card-side bg-gray-200 shadow-xl mx-32 mb-20 mt-20 border-2">
         <figure className="h-[400px] ">
           <img src="https://i.ibb.co/cNsxKMv/image.png" alt="Album" />
         </figure>
@@ -15,11 +15,11 @@ const DownloadApp = () => {
             <input
               type="text"
               placeholder="Enter Your Phone Number"
-              className=" p-3 rounded-l-lg sm:w-2/3 w-full max-w-xs"
+              className=" p-3 rounded-l-lg sm:w-2/3 w-full max-w-xs border-2"
             />
             <button
               type="button"
-              className="w-2/5 p-3 font-semibold rounded-r-lg sm:w-1/3 dark:bg-violet-400 dark:text-gray-900"
+              className="w-2/5 p-3 font-semibold rounded-r-lg sm:w-1/3 bg-violet-400 text-gray-900"
             >
               Get App
             </button>

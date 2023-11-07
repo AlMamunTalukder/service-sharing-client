@@ -1,9 +1,59 @@
+import { useContext } from "react";
+import swal from "sweetalert";
+import { AuthContext } from "./../../PrivateRouter/AuthProvider";
+
 const AddServices = () => {
+  const { user } = useContext(AuthContext);
+  console.log(user);
+  const handleAddService = (e) => {
+    e.preventDefault();
+    const form = e.target;
+
+    const serviceName = form.sName.value;
+    const serviceProviderName = form.sPName.value;
+    const providerEmail = form.sPEmail.value;
+    const servicePrice = form.price.value;
+    const serviceArea = form.serviceArea.value;
+    const serviceImage = form.photo.value;
+    const serviceDescription = form.description.value;
+    const serviceProviderImage = user?.photoURL;
+
+    const newServices = {
+      serviceImage,
+      serviceName,
+      serviceDescription,
+      serviceProviderName,
+      serviceProviderImage,
+      servicePrice,
+      serviceArea,
+      providerEmail,
+    };
+    console.log(newServices);
+
+    fetch("http://localhost:5000/services", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(newServices),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        if (data.insertedId) {
+          swal("Welcome", "Service Added Successfully", "success");
+        }
+      });
+  };
+
   return (
     <div>
       <div className="">
         <div className="container mx-auto p-4 ">
-          <form className="w-full max-w-lg mx-auto bg-blue-50 m-5 p-5">
+          <form
+            className="w-full max-w-lg mx-auto bg-blue-50 m-5 p-5"
+            onSubmit={handleAddService}
+          >
             <div className="grid grid-cols-2 gap-4">
               <div className="col-span-1">
                 <label className="block text-gray-700 text-sm font-bold mb-2">
@@ -18,24 +68,26 @@ const AddServices = () => {
               </div>
               <div className="col-span-1">
                 <label className="block text-gray-700 text-sm font-bold mb-2">
-                  Name
+                  Service Provider Name
                 </label>
                 <input
                   type="text"
-                  id="name"
-                  name="name"
+                  id="sPName"
+                  name="sPName"
                   className="w-full px-3 py-2 border rounded-lg"
                 />
               </div>
               <div className="col-span-1">
                 <label className="block text-gray-700 text-sm font-bold mb-2">
-                  Email
+                  Service Provider Email
                 </label>
                 <input
                   type="email"
-                  id="email"
-                  name="email"
+                  id="sPEmail"
+                  name="sPEmail"
+                  defaultValue={user?.email}
                   className="w-full px-3 py-2 border rounded-lg"
+                  readOnly
                 />
               </div>
               <div className="col-span-1">
@@ -62,7 +114,7 @@ const AddServices = () => {
               </div>
               <div className="col-span-1">
                 <label className="block text-gray-700 text-sm font-bold mb-2">
-                  Photo
+                  Service Image
                 </label>
                 <input
                   type="text"

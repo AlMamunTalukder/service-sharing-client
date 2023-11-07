@@ -1,8 +1,11 @@
 import { useContext } from "react";
 import { AuthContext } from "./../PrivateRouter/AuthProvider";
+import { useLoaderData } from "react-router-dom";
+import swal from "sweetalert";
 
 /* eslint-disable react/prop-types */
-const ServiceDetails = ({ service }) => {
+const ServiceDetails = () => {
+  const services = useLoaderData();
   const { user } = useContext(AuthContext);
   const {
     _id,
@@ -14,13 +17,52 @@ const ServiceDetails = ({ service }) => {
     servicePrice,
     serviceArea,
     providerEmail,
-  } = service || {};
+  } = services || {};
+
+  //below code for send data in db
+  const handlePurchaseService = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const serviceName = form.serviceName.value;
+    const serviceImage = form.photo.value;
+    const providerEmail = form.email.value;
+    const userEmail = user?.email;
+    const instruction = form.instruction.value;
+    const servicePrice = form.price.value;
+    const date = form.date.value;
+
+    const purchase = {
+      serviceName,
+      serviceImage,
+      providerEmail,
+      userEmail,
+      service_id: _id,
+      date,
+      servicePrice,
+      instruction,
+    };
+    console.log(purchase);
+    fetch("http://localhost:5000/purchases", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(purchase),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        if (data.insertedId) {
+          swal("Welcome", "Service Purchase successfully", "success");
+        }
+      });
+  };
   return (
     <div className="items-center justify-center  ">
       <div className="flex flex-col max-w-lg p-6 space-y-6 overflow-hidden rounded-lg shadow-md dark:bg-gray-900 dark:text-gray-100 my-12 ml-[100px] md:ml-[200px] lg:ml-[500px] ">
         <div className="flex space-x-4">
           <div className="flex flex-col space-y-1">
-            <a rel="noopener noreferrer" className="text-sm font-semibold">
+            <a rel="" className="text-sm font-semibold">
               {serviceProviderName}
             </a>
             <span className="text-xs dark:text-gray-400">{serviceArea}</span>
@@ -55,22 +97,28 @@ const ServiceDetails = ({ service }) => {
 
         <button
           className="btn bg-blue-500 text-white"
-          onClick={() => document.getElementById("my_modal_3").showModal()}
+          onClick={() => document.getElementById("my_modal").showModal()}
         >
           Book Now
         </button>
-        <dialog id="my_modal_3" className="modal">
+        <dialog id="my_modal" className="modal">
           <div className="modal-box">
-            <form method="dialog">
-              {/* if there is a button in form, it will close the modal */}
-              <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+            <div method="dialog">
+              {/*if there is a button in form, it will close the modal */}
+              <button
+                className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+                onClick={() => document.getElementById("my_modal").close()}
+              >
                 ✕
               </button>
-            </form>
+            </div>
             <div>
               <div className="">
                 <div className="container mx-auto p-1 ">
-                  <form className="w-full max-w-lg mx-auto bg-blue-50 m-4 p-2 rounded-md h-full">
+                  <form
+                    className="w-full max-w-lg mx-auto bg-blue-50 m-4 p-2 rounded-md h-full"
+                    onSubmit={handlePurchaseService}
+                  >
                     <div className="grid grid-cols-2 gap-4">
                       <div className="col-span-1">
                         <label className="block text-gray-700 text-sm font-bold mb-2">
@@ -78,8 +126,8 @@ const ServiceDetails = ({ service }) => {
                         </label>
                         <input
                           type="text"
-                          id="sName"
-                          name="sName"
+                          id="serviceName"
+                          name="serviceName"
                           className="w-full px-3 py-2 border rounded-lg text-black"
                           defaultValue={serviceName}
                           disabled
@@ -100,7 +148,7 @@ const ServiceDetails = ({ service }) => {
                       </div>
                       <div className="col-span-1">
                         <label className="block text-gray-700 text-sm font-bold mb-2">
-                          Service Provider email
+                          Service Provider Email
                         </label>
                         <input
                           type="email"
@@ -117,8 +165,8 @@ const ServiceDetails = ({ service }) => {
                         </label>
                         <input
                           type="email"
-                          id="email"
-                          name="email"
+                          id="userEmail"
+                          name="userEmail"
                           className="w-full px-3 py-2 border rounded-lg text-black"
                           defaultValue={user?.email}
                           disabled
@@ -133,6 +181,7 @@ const ServiceDetails = ({ service }) => {
                           id="date"
                           name="date"
                           className="w-full px-3 py-2 border rounded-lg"
+                          required
                         />
                       </div>
                       <div className="col-span-1">
@@ -144,21 +193,24 @@ const ServiceDetails = ({ service }) => {
                           id="price"
                           name="price"
                           className="w-full px-3 py-2 border rounded-lg text-black"
-                          defaultValue={servicePrice}
+                          defaultValue={"$" + servicePrice}
                           disabled
+                          // readOnly
                         />
                       </div>
                     </div>
 
                     <div className="">
                       <label className="block text-gray-700 text-sm font-bold mb-2">
-                        Special instruction
+                        Special Instruction
                       </label>
                       <textarea
                         type="text"
-                        id="description"
-                        name="description"
-                        className="w-full px-3 py-2 border rounded-lg"
+                        id="instruction"
+                        name="instruction"
+                        placeholder="Write Anything Like Address , Area, Customized Service Plan"
+                        className="w-full px-3 py-2 border rounded-lg "
+                        required
                       />
                     </div>
 

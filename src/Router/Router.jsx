@@ -8,8 +8,9 @@ import LogIn from "../LogIn/LogIn";
 import Registration from "../Registration/Registration";
 import AddServices from "../Services/AddServices/AddServices";
 import AllServices from "../Services/Services/AllServices";
-import Details from "../Details/Details";
+
 import PrivateRouter from "./../PrivateRouter/PrivateRouter";
+import ServiceDetails from "../Details/ServiceDetails";
 
 const router = createBrowserRouter([
   {
@@ -47,7 +48,7 @@ const router = createBrowserRouter([
         path: "/viewDetails/:id",
         element: (
           <PrivateRouter>
-            <Details />
+            <ServiceDetails />
           </PrivateRouter>
         ),
         loader: ({ params }) =>
