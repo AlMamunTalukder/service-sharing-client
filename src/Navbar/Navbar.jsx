@@ -91,9 +91,9 @@ const Navbar = () => {
     <div>
       <div className="navbar bg-base-100 shadow-md">
         <div className="navbar-start">
-          <a className="btn btn-ghost normal-case text-xl">
+          <NavLink className="btn btn-ghost normal-case text-xl" to="/">
             Repair Service Hub
-          </a>
+          </NavLink>
         </div>
 
         <div className="navbar-center hidden lg:flex">
