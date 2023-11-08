@@ -7,7 +7,7 @@ const MyPendingWorks = () => {
   const [cartData, setCartData] = useState([]);
   console.log(cartData);
   useEffect(() => {
-    fetch(`http://localhost:5000/purchase/${user?.email}`)
+    fetch(`https://service-sharing-server.vercel.app/purchase/${user?.email}`)
       .then((res) => res.json())
       .then((data) => setCartData(data));
   }, [user]);
