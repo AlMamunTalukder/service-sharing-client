@@ -2,6 +2,8 @@ import { useContext, useEffect, useState } from "react";
 
 import { AuthContext } from "../../PrivateRouter/AuthProvider";
 import Swal from "sweetalert2";
+import { Link } from "react-router-dom";
+import swal from "sweetalert";
 
 const ManageServices = () => {
   const { user } = useContext(AuthContext);
@@ -39,7 +41,40 @@ const ManageServices = () => {
       }
     });
   };
+  const handleUpdateService = (e, _id) => {
+    e.preventDefault();
+    const form = e.target;
+    const serviceName = form.serviceName.value;
+    const serviceImage = form.photo.value;
+    const serviceDescription = form.serviceDescription.value;
+    const servicePrice = form.price.value;
 
+    const purchase = {
+      serviceName,
+      serviceImage,
+      servicePrice,
+      serviceDescription,
+    };
+    // console.log(purchase);
+    fetch(`http://localhost:5000/services/${_id}`, {
+      method: "PUT",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(purchase),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        // console.log(data);
+        if (data.insertedId) {
+          swal("Welcome", "Service Update successfully", "success");
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        swal("Error", "Service Update failed", "error");
+      });
+  };
   return (
     <div>
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-y-6 my-8 ml-32">
@@ -63,11 +98,108 @@ const ManageServices = () => {
             </div>
             <p className="dark:text-gray-100">Price: {item?.servicePrice}</p>
             <p className="dark:text-gray-100 mb-4">
-              Instruction: {item?.instruction}
+              Description: {item?.serviceDescription}
             </p>
             <div className="text-center ">
               {/* update button here */}
-              <button className="btn mr-2 btn-primary">Update</button>
+
+              <button
+                className="btn bg-blue-500 text-white mr-5"
+                onClick={() => document.getElementById("my_modal").showModal()}
+              >
+                Edit
+              </button>
+
+              <dialog id="my_modal" className="modal">
+                <div className="modal-box">
+                  <div method="dialog">
+                    {/*if there is a button in form, it will close the modal */}
+                    <button
+                      className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+                      onClick={() =>
+                        document.getElementById("my_modal").close()
+                      }
+                    >
+                      ✕
+                    </button>
+                  </div>
+                  <div>
+                    <div className="">
+                      <div className="container mx-auto p-1 ">
+                        <form
+                          className="w-full max-w-lg mx-auto bg-blue-50 m-4 p-2 rounded-md h-full"
+                          onSubmit={handleUpdateService}
+                        >
+                          <div className="grid grid-cols-2 gap-4">
+                            <div className="col-span-1">
+                              <label className="block text-gray-700 text-sm font-bold mb-2">
+                                Service Name
+                              </label>
+                              <input
+                                type="text"
+                                id="serviceName"
+                                name="serviceName"
+                                className="w-full px-3 py-2 border rounded-lg text-black"
+                                defaultValue={item?.serviceName}
+                              />
+                            </div>
+                            <div className="col-span-1">
+                              <label className="block text-gray-700 text-sm font-bold mb-2">
+                                Service Image
+                              </label>
+                              <input
+                                type="text"
+                                id="photo"
+                                name="photo"
+                                className="w-full px-3 py-2 border rounded-lg text-black"
+                                defaultValue={item?.serviceImage}
+                              />
+                            </div>
+
+                            <div className="col-span-1">
+                              <label className="block text-gray-700 text-sm font-bold mb-2 ">
+                                Price
+                              </label>
+                              <input
+                                type="text"
+                                id="price"
+                                name="price"
+                                className="w-full px-3 py-2 border rounded-lg text-black"
+                                defaultValue={item?.servicePrice}
+
+                                // readOnly
+                              />
+                            </div>
+                          </div>
+
+                          <div className="">
+                            <label className="block text-gray-700 text-sm font-bold mb-2">
+                              Service Description
+                            </label>
+                            <textarea
+                              type="text"
+                              id="serviceDescription"
+                              name="serviceDescription"
+                              placeholder="Write Anything Like Address , Area, Customized Service Plan"
+                              className="w-full px-3 py-2 border rounded-lg "
+                              defaultValue={item?.serviceDescription}
+                            />
+                          </div>
+
+                          <div className="mt-4">
+                            <button
+                              type="submit"
+                              className="w-full bg-blue-500 text-white font-bold py-2 rounded-lg"
+                            >
+                              Update
+                            </button>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </dialog>
 
               {/* Delete Button here */}
               <button
