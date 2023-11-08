@@ -10,12 +10,13 @@ import AddServices from "../Services/AddServices/AddServices";
 import AllServices from "../Services/Services/AllServices";
 
 import PrivateRouter from "./../PrivateRouter/PrivateRouter";
-import ServiceDetails from "../Details/ServiceDetails";
+
 import ManageServices from "../Services/ManageServices/ManageServices";
 import MySchedules from "../MySchedules/MySchedules";
 import Services from "../Services/Services/Services";
 import MyPendingWorks from "../MySchedules/MyPendingWorks";
 import MyBookings from "../MySchedules/MyBookings";
+import Details from "./../Details/Details";
 
 const router = createBrowserRouter([
   {
@@ -57,7 +58,7 @@ const router = createBrowserRouter([
         path: "/viewDetails/:id",
         element: (
           <PrivateRouter>
-            <ServiceDetails />
+            <Details />
           </PrivateRouter>
         ),
         loader: ({ params }) =>

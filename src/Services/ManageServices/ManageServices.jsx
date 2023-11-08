@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 
 import { AuthContext } from "../../PrivateRouter/AuthProvider";
 import Swal from "sweetalert2";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import swal from "sweetalert";
 
 const ManageServices = () => {
@@ -11,7 +11,7 @@ const ManageServices = () => {
   const [cartData, setCartData] = useState([]);
   console.log(cartData);
   useEffect(() => {
-    fetch(`http://localhost:5000/services/${user?.email}`)
+    fetch(`http://localhost:5000/service/${user?.email}`)
       .then((res) => res.json())
       .then((data) => setCartData(data));
   }, [user]);
@@ -42,7 +42,7 @@ const ManageServices = () => {
     });
   };
   const handleUpdateService = (e, _id) => {
-    e.preventDefault();
+    // e.preventDefault();
     const form = e.target;
     const serviceName = form.serviceName.value;
     const serviceImage = form.photo.value;
@@ -55,7 +55,7 @@ const ManageServices = () => {
       servicePrice,
       serviceDescription,
     };
-    // console.log(purchase);
+    console.log(purchase);
     fetch(`http://localhost:5000/services/${_id}`, {
       method: "PUT",
       headers: {
@@ -65,8 +65,8 @@ const ManageServices = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        // console.log(data);
-        if (data.insertedId) {
+        console.log(data);
+        if (data.acknowledged) {
           swal("Welcome", "Service Update successfully", "success");
         }
       })
@@ -128,7 +128,11 @@ const ManageServices = () => {
                       <div className="container mx-auto p-1 ">
                         <form
                           className="w-full max-w-lg mx-auto bg-blue-50 m-4 p-2 rounded-md h-full"
-                          onSubmit={handleUpdateService}
+                          onSubmit={(e) => {
+                            e.preventDefault();
+                            console.log("hellow");
+                            handleUpdateService(e, item?._id);
+                          }}
                         >
                           <div className="grid grid-cols-2 gap-4">
                             <div className="col-span-1">
