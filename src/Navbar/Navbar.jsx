@@ -33,13 +33,13 @@ const Navbar = () => {
         </NavLink>
       </li>
       {user && (
-        <li tabIndex={0}>
+        <li tabIndex={0} style={{ zIndex: 9999 }} className="w-36">
           <details>
             <summary>Dash Board</summary>
             <ul className="">
               <li className="">
                 <NavLink
-                  to="/addServices"
+                  to="/myServices"
                   className={({ isActive, isPending }) =>
                     isPending
                       ? "pending"
@@ -101,6 +101,7 @@ const Navbar = () => {
       )}
     </>
   );
+
   return (
     <div>
       <div className="navbar bg-base-100 shadow-md">
@@ -139,9 +140,17 @@ const Navbar = () => {
             </NavLink>
           )}
         </div>
-
+        {/* this is for showen name and img when login */}
+        <div className="lg:hidden">
+          {user?.photoURL ? (
+            <img src={user.photoURL} className="w-10 h-10 rounded-full " />
+          ) : (
+            <div></div>
+          )}
+          <p className="">{user?.displayName}</p>
+        </div>
         <div className="dropdown lg:hidden ">
-          <div className="flex justify-between items-end  pl-72 ">
+          <div className="flex   pl-2 ">
             <button className="btn btn-square btn-ghost">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -160,33 +169,23 @@ const Navbar = () => {
           </div>
           <ul
             tabIndex={0}
-            className=" menu menu-sm dropdown-content mt-3 h-[200px] p-2 shadow bg-base-100 rounded-box items-center ml-48 w-[150px] gap-x-2"
+            className="menu menu-sm dropdown-content mt-3 shadow bg-base-100 rounded-box ml-20"
+            style={{ zIndex: 9999 }}
           >
             {navbarPage}
-            <div className="navbar-end hidden lg:flex">
+            <div className="navbar-end">
               {user ? (
-                <div className="flex items-center">
-                  {user.photoURL ? (
-                    <img
-                      src={user.photoURL}
-                      alt={`${user.displayName}'s profile`}
-                      className="w-10 h-10 rounded-full mr-2"
-                    />
-                  ) : (
-                    <div className="w-10 h-10 rounded-full bg-gray-500 mr-2"></div>
-                  )}
-                  <p className="mr-2">{user.displayName}</p>
-                  {/* <p>{user.email}</p> */}
+                <div className="  ">
                   <button
                     onClick={handleLogOut}
-                    className="btn btn-primary ml-2"
+                    className="btn btn-xs btn-error mt-4 w-auto "
                   >
                     Log Out
                   </button>
                 </div>
               ) : (
                 <NavLink to="logIn">
-                  <a className="btn bg-violet-400 rounded text-black hover:text-white">
+                  <a className="btn btn-xs bg-violet-400 rounded text-black hover:text-white w-16 ">
                     Log In
                   </a>
                 </NavLink>

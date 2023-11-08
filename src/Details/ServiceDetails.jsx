@@ -41,7 +41,7 @@ const ServiceDetails = () => {
       servicePrice,
       instruction,
     };
-    console.log(purchase);
+    // console.log(purchase);
     fetch("http://localhost:5000/purchases", {
       method: "POST",
       headers: {
@@ -51,10 +51,14 @@ const ServiceDetails = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         if (data.insertedId) {
           swal("Welcome", "Service Purchase successfully", "success");
         }
+      })
+      .catch((error) => {
+        console.log(error);
+        swal("Error", "Service Purchase failed", "error");
       });
   };
   return (
