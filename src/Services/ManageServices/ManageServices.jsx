@@ -11,7 +11,7 @@ const ManageServices = () => {
   const [cartData, setCartData] = useState([]);
   console.log(cartData);
   useEffect(() => {
-    fetch(`http://localhost:5000/service/${user?.email}`)
+    fetch(`https://service-sharing-server.vercel.app/service/${user?.email}`)
       .then((res) => res.json())
       .then((data) => setCartData(data));
   }, [user]);
@@ -28,7 +28,7 @@ const ManageServices = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:5000/services/${_id}`, {
+        fetch(`https://service-sharing-server.vercel.app/services/${_id}`, {
           method: "DELETE",
         })
           .then((res) => res.json())
@@ -56,7 +56,7 @@ const ManageServices = () => {
       serviceDescription,
     };
     console.log(purchase);
-    fetch(`http://localhost:5000/services/${_id}`, {
+    fetch(`https://service-sharing-server.vercel.app/services/${_id}`, {
       method: "PUT",
       headers: {
         "content-type": "application/json",

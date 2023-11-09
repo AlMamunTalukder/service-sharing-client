@@ -43,7 +43,8 @@ const router = createBrowserRouter([
             <AllServices />
           </PrivateRouter>
         ),
-        loader: () => fetch("http://localhost:5000/services"),
+        loader: () =>
+          fetch("https://service-sharing-server.vercel.app/services"),
       },
 
       {
@@ -62,7 +63,9 @@ const router = createBrowserRouter([
           </PrivateRouter>
         ),
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/services/${params.id}`),
+          fetch(
+            `https://service-sharing-server.vercel.app/services/${params.id}`
+          ),
       },
       {
         path: "/manageServices",
