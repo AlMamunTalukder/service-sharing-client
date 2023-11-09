@@ -10,7 +10,7 @@ const PrivateRouter = ({ children }) => {
   // console.log(location.pathname);
 
   if (loading) {
-    return <progress className="progress w-56" />;
+    return <span className="loading loading-dots loading-lg"></span>;
   }
 
   if (user?.email) {
