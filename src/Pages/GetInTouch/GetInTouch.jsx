@@ -1,9 +1,9 @@
 const GetInTouch = () => {
   return (
-    <div className="mx-32 ">
+    <div className="mx-4 lg:mx-32 mt-4">
       <section className="py-6 bg-gray-800 text-gray-50 mb-10 rounded-lg">
         <div className="grid max-w-6xl grid-cols-1 px-6 mx-auto lg:px-8 md:grid-cols-2 md:divide-x">
-          <div className="py-6 md:py-0 md:px-6 mt-24">
+          <div className="py-6 md:py-0 md:px-6 lg:mt-24">
             <h1 className="text-4xl font-bold">Get in touch</h1>
             <p className="pt-2 pb-4">
               Fill in the form to start a conversation

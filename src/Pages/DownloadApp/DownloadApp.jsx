@@ -3,11 +3,11 @@ import { Link } from "react-router-dom";
 const DownloadApp = () => {
   return (
     <div>
-      <div className="card lg:card-side bg-gray-200 shadow-xl mx-32 mb-20 mt-20 border-2">
+      <div className="card lg:card-side bg-gray-200 shadow-xl mx-4 lg:mx-32 lg:mb-20 mt-20 border-2 h">
         <figure className="h-[400px] ">
           <img src="https://i.ibb.co/cNsxKMv/image.png" alt="Album" />
         </figure>
-        <div className="card-body h-[300px] mt-8">
+        <div className="card-body lg:h-[300px] -mt-8 lg:mt-8">
           <h2 className="card-title text-black">DOWNLOAD OUR APP</h2>
           <p>Any Service, Any time,Any where</p>
           <h2>Give us your mobile Number. you will get app download link</h2>
