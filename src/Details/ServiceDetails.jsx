@@ -43,7 +43,7 @@ const ServiceDetails = () => {
       instruction,
     };
     console.log(purchase);
-    fetch("https://service-sharing-server.vercel.app/purchases", {
+    fetch("http://localhost:5000/purchases", {
       method: "POST",
       headers: {
         "content-type": "application/json",

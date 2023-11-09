@@ -30,7 +30,7 @@ const AddServices = () => {
     };
     console.log(newServices);
 
-    fetch("https://service-sharing-server.vercel.app/services", {
+    fetch("http://localhost:5000/services", {
       method: "POST",
       headers: {
         "content-type": "application/json",

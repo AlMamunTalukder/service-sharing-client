@@ -7,7 +7,7 @@ const MyBookings = () => {
   const [cartData, setCartData] = useState([]);
   console.log(cartData);
   useEffect(() => {
-    fetch(`https://service-sharing-server.vercel.app/purchases/${user?.email}`)
+    fetch(`http://localhost:5000/purchases/${user?.email}`)
       .then((res) => res.json())
       .then((data) => setCartData(data));
   }, [user]);
