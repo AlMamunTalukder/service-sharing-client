@@ -98,17 +98,19 @@ const ServiceDetails = () => {
 
         <button
           className="btn bg-blue-500 text-white"
-          onClick={() => document.getElementById("my_modal").showModal()}
+          onClick={() => document.getElementById(`my_modal-${_id}`).showModal()}
         >
           Book Now
         </button>
-        <dialog id="my_modal" className="modal">
+        <dialog id={`my_modal-${_id}`} className="modal">
           <div className="modal-box">
             <div method="dialog">
               {/*if there is a button in form, it will close the modal */}
               <button
                 className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
-                onClick={() => document.getElementById("my_modal").close()}
+                onClick={() =>
+                  document.getElementById(`my_modal-${_id}`).close()
+                }
               >
                 ✕
               </button>
@@ -219,6 +221,9 @@ const ServiceDetails = () => {
                       <button
                         type="submit"
                         className="w-full bg-blue-500 text-white font-bold py-2 rounded-lg"
+                        onClick={() =>
+                          document.getElementById(`my_modal-${_id}`).close()
+                        }
                       >
                         Purchase Service
                       </button>

@@ -36,12 +36,14 @@ const MyPendingWorks = () => {
             <p className="dark:text-gray-100 mb-4">
               Instruction: {item?.instruction}
             </p>
-            <div className="text-center ">
-              {/* update button here */}
-              <button className="btn mr-2 btn-primary">Update</button>
 
-              {/* Delete Button here */}
-              <button className="btn btn-error">Delete</button>
+            <div className="text-center flex">
+              <p className="mt-3 mx-5">Status:</p>
+              <select className="select select-bordered join-item">
+                <option>Pending</option>
+                <option>In Progress</option>
+                <option>Complete</option>
+              </select>
             </div>
           </div>
         ))}

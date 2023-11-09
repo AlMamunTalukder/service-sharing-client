@@ -21,7 +21,7 @@ const Services = () => {
           Popular Services
         </h3>
         {/* <p>{services.length}</p> */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 ">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 lg:gap-6 w-64 md:w-auto lg:w-auto  ">
           {displayedServices.map((service) => (
             <ServiceCard key={service._id} service={service}></ServiceCard>
           ))}

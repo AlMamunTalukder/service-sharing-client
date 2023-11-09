@@ -12,8 +12,8 @@ const ServiceCard = ({ service }) => {
     servicePrice,
   } = service;
   return (
-    <div>
-      <div className="card card-side bg-base-100 shadow-xl h-72">
+    <div className=" -ml-11 md:ml-auto lg:ml-auto">
+      <div className="card card-side bg-base-100 shadow-xl  lg:h-72 ">
         <figure className=" ">
           <img src={serviceImage} alt="Movie" />
         </figure>

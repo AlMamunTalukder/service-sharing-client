@@ -141,16 +141,20 @@ const Navbar = () => {
           )}
         </div>
         {/* this is for showen name and img when login */}
-        <div className="lg:hidden">
+        <div className="lg:hidden  ">
           {user?.photoURL ? (
-            <img src={user.photoURL} className="w-10 h-10 rounded-full " />
+            <div className="">
+              <img
+                src={user.photoURL}
+                className="w-10 h-10 rounded-full ml-24 -mr-20"
+              />
+            </div>
           ) : (
             <div></div>
           )}
-          <p className="">{user?.displayName}</p>
         </div>
         <div className="dropdown lg:hidden ">
-          <div className="flex   pl-2 ">
+          <div className="flex  ml-24 ">
             <button className="btn btn-square btn-ghost">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -167,31 +171,34 @@ const Navbar = () => {
               </svg>
             </button>
           </div>
-          <ul
-            tabIndex={0}
-            className="menu menu-sm dropdown-content mt-3 shadow bg-base-100 rounded-box ml-20"
-            style={{ zIndex: 9999 }}
-          >
-            {navbarPage}
-            <div className="navbar-end">
-              {user ? (
-                <div className="  ">
-                  <button
-                    onClick={handleLogOut}
-                    className="btn btn-xs btn-error mt-4 w-auto "
-                  >
-                    Log Out
-                  </button>
-                </div>
-              ) : (
-                <NavLink to="logIn">
-                  <a className="btn btn-xs bg-violet-400 rounded text-black hover:text-white w-16 ">
-                    Log In
-                  </a>
-                </NavLink>
-              )}
-            </div>
-          </ul>
+          <div className="mr-40">
+            <ul
+              tabIndex={0}
+              className="menu dropdown-content mt-3 shadow bg-base-100 rounded-box "
+              style={{ zIndex: 9999 }}
+            >
+              {navbarPage}
+              <div className="navbar-end">
+                {user ? (
+                  <div className=" ml-6  ">
+                    <p className="">{user.displayName}</p>
+                    <button
+                      onClick={handleLogOut}
+                      className="btn btn-xs btn-error my-2  w-24 "
+                    >
+                      Log Out
+                    </button>
+                  </div>
+                ) : (
+                  <NavLink to="logIn">
+                    <a className="btn btn-xs bg-violet-400 rounded text-black hover:text-white w-16 ">
+                      Log In
+                    </a>
+                  </NavLink>
+                )}
+              </div>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
