@@ -1,4 +1,37 @@
+import { useRef } from "react";
+import emailjs from "@emailjs/browser";
+import Swal from "sweetalert2";
 const GetInTouch = () => {
+  const form = useRef();
+  const sendEmail = (e) => {
+    e.preventDefault();
+
+    emailjs
+      .sendForm(
+        "service_qy37urq",
+        "template_jgak3f8",
+        form.current,
+        "hYHFNWwDDEM1kwFWE"
+      )
+      .then(
+        (result) => {
+          console.log(result.text);
+          Swal.fire({
+            icon: "success",
+            title: "Email Sent Successfully",
+            text: "We will get back to you soon!",
+          });
+        },
+        (error) => {
+          console.log(error.text);
+          Swal.fire({
+            icon: "error",
+            title: "Error Sending Email",
+            text: "Please try again later.",
+          });
+        }
+      );
+  };
   return (
     <div className="mx-4 lg:mx-32 mt-4">
       <section className="py-6 bg-gray-800 text-gray-50 mb-10 rounded-lg">
@@ -49,13 +82,18 @@ const GetInTouch = () => {
               </p>
             </div>
           </div>
-          <form className="flex flex-col py-6 space-y-6 md:py-0 md:px-6">
+          <form
+            className="flex flex-col py-6 space-y-6 md:py-0 md:px-6"
+            ref={form}
+            onSubmit={sendEmail}
+          >
             <label className="block">
               <span className="mb-1">Full name</span>
 
               <input
                 type="text"
-                placeholder="Leroy Jenkins"
+                name="from_name"
+                placeholder="Your Name"
                 className="block input input-bordered input-md w-full mt-2"
               />
             </label>
@@ -64,7 +102,8 @@ const GetInTouch = () => {
 
               <input
                 type="email"
-                placeholder="leroy@jenkins.com"
+                name="from_email"
+                placeholder="mail@mail.com"
                 className="block input input-bordered input-md w-full mt-2"
               />
             </label>
@@ -72,11 +111,12 @@ const GetInTouch = () => {
               <span className="mb-1">Message</span>
               <textarea
                 placeholder="Bio"
+                name="message"
                 className="block textarea textarea-bordered textarea-md w-full mt-2"
               ></textarea>
             </label>
             <button
-              type="button"
+              type="submit"
               className="self-center px-8 py-3 text-lg rounded focus:ring hover:ring focus:ri bg-violet-400 text-gray-900 focus:ri hover:ri"
             >
               Submit

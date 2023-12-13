@@ -15,7 +15,7 @@ const Registration = () => {
   const handleRegisterAuth = (e) => {
     e.preventDefault();
 
-    if (!/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/.test(password)) {
+    if (!/^(?=.*[A-Za-z])(?=.*\d).{6,}$/.test(password)) {
       swal(
         "Error",
         "Minimum Six character, at least one Letter and one Number",
